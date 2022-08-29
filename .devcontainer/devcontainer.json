@@ -1,0 +1,10 @@
+{
+  "image": "atoktoto/pico-builder:latest",
+  "customizations": {
+      "vscode": {
+        "extensions": ["marus25.cortex-debug", "ms-vscode.cmake-tools", "ms-vscode.cpptools"]
+      }
+  },
+
+  "runArgs": ["--privileged"]
+}
