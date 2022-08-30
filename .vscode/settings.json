@@ -23,6 +23,8 @@
         "tusb_compiler.h": "c",
         "usbh_classdriver.h": "c",
         "midi_host.h": "c",
-        "resets.h": "c"
+        "resets.h": "c",
+        "stdlib.h": "c",
+        "board.h": "c"
     }
 }

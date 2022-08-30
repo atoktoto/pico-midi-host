@@ -12,6 +12,9 @@ set(PICO_EXAMPLES_PATH ${PROJECT_SOURCE_DIR})
 # Initialize the SDK
 pico_sdk_init()
 
+set(FAMILY rp2040)
+set(BOARD pico_sdk)
+
 include(example_auto_set_url.cmake)
 # Add main Folder
-add_subdirectory(main)
+add_subdirectory(src)
