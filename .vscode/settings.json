@@ -22,6 +22,8 @@
         "midi_host.h": "c",
         "resets.h": "c",
         "stdlib.h": "c",
-        "board.h": "c"
+        "board.h": "c",
+        "task.h": "c",
+        "rp2040_config.h": "c"
     }
 }

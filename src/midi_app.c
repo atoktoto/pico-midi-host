@@ -135,7 +135,7 @@ static void test_tx(void)
   }
 }
 
-static void test_rx(void)
+void test_rx(void)
 {
   // device must be attached and have at least one endpoint ready to receive a message
   if (!midi_dev_addr || !tuh_midi_configured(midi_dev_addr))

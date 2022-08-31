@@ -2,11 +2,18 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "FreeRTOS.h"
+#include "task.h"
+
 #include "bsp/board.h"
 #include "tusb.h"
-#if CFG_TUH_MIDI
 
-void led_blinking_task(void);
+#define USBD_STACK_SIZE    (3*configMINIMAL_STACK_SIZE/2) * (CFG_TUSB_DEBUG ? 2 : 1)
+
+void led_blinking_task(void *pvParams);
+void tuh_loop_task(void *pvParams);
+void midi_host_task(void *pvParams);
+
 extern void midi_host_app_task(void);
 
 int main(void) {
@@ -15,38 +22,43 @@ int main(void) {
   printf("TinyUSB Host MIDI Example\r\n");
   tusb_init();
 
-  while (1) {
-    tuh_task();
-    led_blinking_task();
-    midi_host_app_task();
-  }
+  xTaskCreate(led_blinking_task, "blink", 256, NULL, tskIDLE_PRIORITY, NULL);
+  xTaskCreate(tuh_loop_task, "tuh", 256, NULL, configMAX_PRIORITIES-1, NULL);
+  xTaskCreate(midi_host_task, "midi-host", 256, NULL, tskIDLE_PRIORITY, NULL);
 
+  vTaskStartScheduler();
   return 0;
 }
 
-#endif
-
-void led_blinking_task(void) {
-  const uint32_t interval_ms = 1000;
-  static uint32_t start_ms = 0;
-
-  static bool led_state = false;
-
-  if ( board_millis() - start_ms < interval_ms) return;
-  start_ms += interval_ms;
-
-  board_led_write(led_state);
-  led_state = 1 - led_state;
+void tuh_loop_task(void *pvParams) {
+  while(true) {
+    tuh_task();
+  }
 }
 
-void vApplicationMallocFailedHook( void )
-{
-    /* Called if a call to pvPortMalloc() fails because there is insufficient
-    free memory available in the FreeRTOS heap.  pvPortMalloc() is called
-    internally by FreeRTOS API functions that create tasks, queues, software
-    timers, and semaphores.  The size of the FreeRTOS heap is set by the
-    configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
+void midi_host_task(void *pvParams) {
+  while(true) {
+    test_rx();
+  }
+}
 
-    /* Force an assert. */
-    configASSERT( ( volatile void * ) NULL );
+void led_blinking_task(void *pvParams) {
+  static bool led_state = false;
+  while(true) {
+    board_led_write(led_state);
+    led_state = 1 - led_state;
+    vTaskDelay(200);
+  }
+}
+
+
+void vApplicationMallocFailedHook( void ) {
+  printf("Malloc failed!\r\n");
+  configASSERT( ( volatile void * ) NULL ); // Force an assert.
+}
+
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName ) {
+  printf("Stack overflow!\r\n");
+  configASSERT( ( volatile void * ) NULL ); // Force an assert. 
 }
