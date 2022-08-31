@@ -38,3 +38,15 @@ void led_blinking_task(void) {
   board_led_write(led_state);
   led_state = 1 - led_state;
 }
+
+void vApplicationMallocFailedHook( void )
+{
+    /* Called if a call to pvPortMalloc() fails because there is insufficient
+    free memory available in the FreeRTOS heap.  pvPortMalloc() is called
+    internally by FreeRTOS API functions that create tasks, queues, software
+    timers, and semaphores.  The size of the FreeRTOS heap is set by the
+    configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
+
+    /* Force an assert. */
+    configASSERT( ( volatile void * ) NULL );
+}

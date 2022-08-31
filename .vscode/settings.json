@@ -9,10 +9,7 @@
         "launch": {
             "visibility": "hidden"
         },
-        "build": {
-            "visibility": "hidden"
-        },
-        "buildTarget": {
+        "launchTarget": {
             "visibility": "hidden"
         }
     },

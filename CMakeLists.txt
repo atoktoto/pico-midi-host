@@ -3,11 +3,12 @@ cmake_minimum_required(VERSION 3.12)
 # Import Pico SDK
 include(pico_sdk_import.cmake)
 
+set(FREERTOS_KERNEL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS/FreeRTOS-Kernel)
+include(FreeRTOS_Kernel_import.cmake)
+
 project(pico_examples C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
-
-set(PICO_EXAMPLES_PATH ${PROJECT_SOURCE_DIR})
 
 # Initialize the SDK
 pico_sdk_init()
@@ -24,10 +25,11 @@ target_sources(main PUBLIC
 
 target_include_directories(main PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS
         )
 
  # Import pico_stdlib which imports commonly used features
- target_link_libraries(main PUBLIC pico_stdlib tinyusb_host tinyusb_board)
+ target_link_libraries(main PUBLIC pico_stdlib tinyusb_host tinyusb_board FreeRTOS-Kernel FreeRTOS-Kernel-Heap4)
 
  # Create map/bin/hex file etc.
  pico_add_extra_outputs(main)
