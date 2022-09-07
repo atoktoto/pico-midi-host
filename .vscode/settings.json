@@ -24,6 +24,8 @@
         "stdlib.h": "c",
         "board.h": "c",
         "task.h": "c",
-        "rp2040_config.h": "c"
+        "rp2040_config.h": "c",
+        "midi_app.h": "c",
+        "usb_descriptors.h": "c"
     }
 }

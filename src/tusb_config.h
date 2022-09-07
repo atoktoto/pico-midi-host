@@ -50,7 +50,7 @@
 #endif
 
 // CFG_TUSB_DEBUG is defined by compiler in DEBUG build
-// #define CFG_TUSB_DEBUG           0
+// #define CFG_TUSB_DEBUG           3
 
 /* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
  * Tinyusb use follows macros to declare transferring memory so that they can be put
@@ -78,6 +78,7 @@
 #define CFG_TUH_CDC                 0
 #define CFG_TUH_HID                 0 // typical keyboard + mouse device can have 3-4 HID interfaces
 #define CFG_TUH_MIDI                1 // there will be at most one MIDIStreaming Interface descriptor
+#define CFG_MIDI_HOST_DEVSTRINGS    1
 #define CFG_TUH_MSC                 0
 #define CFG_TUH_VENDOR              0
 
