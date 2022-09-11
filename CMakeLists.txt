@@ -11,8 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(PICO_PLATFORM "rp2040")
 set(PICO_DEOPTIMIZED_DEBUG 1)
 
-# SET(CMAKE_BUILD_TYPE "debug2")
-
 # Initialize the SDK
 pico_sdk_init()
 
@@ -37,12 +35,17 @@ target_link_libraries(freertos
         pico_stdlib
         )
 
+add_subdirectory(lib/arduino_midi_library)
+target_include_directories(midi
+        PUBLIC lib/arduino_midi_library/src) # arduino_midi_library uses include_directories (so they are not exported)
+
+add_subdirectory(lib/pico-midi-usb-transport)
+
 add_executable(main)
 pico_enable_stdio_uart(main 1)
 
 target_sources(main PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/midi_app.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/main.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/usb_descriptors.c
         )
 
@@ -50,8 +53,13 @@ target_include_directories(main PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(main PUBLIC
-        pico_stdlib tinyusb_host tinyusb_board freertos
+target_link_libraries(main
+        pico_stdlib
+        tinyusb_host
+        tinyusb_board
+        freertos
+        midi
+        pico-midi-usb
         )
 
 # Create map/bin/hex file etc.

@@ -1,0 +1,6 @@
+[submodule "lib/pico-midi-usb-transport"]
+	path = lib/pico-midi-usb-transport
+	url = https://github.com/atoktoto/pico-midi-usb-transport.git
+[submodule "lib/arduino_midi_library"]
+	path = lib/arduino_midi_library
+	url = https://github.com/FortySevenEffects/arduino_midi_library.git
