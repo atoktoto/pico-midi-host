@@ -2,6 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/arduino_midi_library" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/arduino_midi_library/external/google-test" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/pico-midi-usb-transport" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/pico-midi-usb-transport/lib/arduino_midi_library" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/lib/arduino_midi_library" vcs="Git" />
   </component>
 </project>
